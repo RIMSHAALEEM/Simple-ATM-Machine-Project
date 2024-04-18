@@ -1,5 +1,5 @@
 {
-  "name": "atm-machine",
+  "name": "@rimshaaleem/cli-atm-machine",
   "version": "1.0.0",
   "description": "This is a simple  ATM Machine project using Typescript, Javascript, Node.js, and Inquirer ",
   "main": "index.js",

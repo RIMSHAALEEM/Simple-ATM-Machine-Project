@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import inquirer from "inquirer";
 import Choice from "inquirer/lib/objects/choice.js";
 
@@ -20,12 +22,13 @@ if (answer.pin === myPin) {
       name: "operation",
       message: "Please select one of the options",
       type: "list",
-      choices: ["Withdraw", "Checkbalance"],
+      choices: ["Withdraw", "Checkbalance","FastCash"],
     },
   ]);
 
   //   console.log(operationAnswer);
 
+  // withdraw condition
   if (operationAnswer.operation === "Withdraw") {
     let amountAns = await inquirer.prompt([
       {
@@ -35,11 +38,37 @@ if (answer.pin === myPin) {
       },
     ]);
 
-    myBalance -= amountAns.amount;
+// condition for insufficient balance
+    if(amountAns.amount > myBalance){
 
-    console.log("Your Remaining Balance is:" + myBalance);
-  } else if (operationAnswer.operation === "Checkbalance") {
-    console.log("Your Balance is:" + myBalance);
+      console.log("Your Balance is Insufficient");
+    }
+
+    // = += -=
+   else { myBalance -= amountAns.amount;
+      console.log(`Your Remaining Balance is:${myBalance}`);
+  }
+
+  } 
+  
+//fastcash condition
+  else if(operationAnswer.operation === "FastCash"){
+    let fast = await inquirer.prompt([{
+      name: "FastCash",
+      message: "Select the amount which you want to withdraw",
+      type:"list",
+      choices: [1000, 2000, 5000, 8000, 10000]
+    }]);
+
+     myBalance -=fast.FastCash;
+     console.log(`You have successfully withdrawn ${fast.FastCash} \nYour remaining balance is:${myBalance} `);
+
+
+  }
+   
+//checkbalace condition
+  else if (operationAnswer.operation === "Checkbalance") {
+    console.log(`Your Balance is:${myBalance}`);
   }
 } else {
   console.log("Incorrect Pin Code");
